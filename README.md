@@ -1,22 +1,49 @@
-name: Run Tests
+Solow Growth Model
+Overview
+This project uses the Solow Growth Model to investigate how savings rates affect long-run capital accumulation and economic growth.
 
-on:
-  push:
-  pull_request:
+The model computes the steady-state level of capital per worker and compares outcomes under different savings rates.
 
-jobs:
-  test:
+Files
+solow.py - main Python program
+tests/test_solow.py - pytest tests
+environment.yml - Mamba environment specification
+submit.slurm - SLURM batch script
+steady_state.csv - sample output
+.github/workflows/tests.yml - GitHub Actions workflow
+Creating the Environment
+mamba env create -f environment.yml
+mamba activate /home/lindizga/mamba-envs/solow-model
+Running the Program
+python solow.py
+This generates:
 
-    runs-on: ubuntu-latest
+steady_state.csv
+Running Tests
+pytest -v
+Example output:
 
-    steps:
+2 passed
+Running on Great Lakes
+Submit the batch job:
 
-      - uses: actions/checkout@v4
+sbatch submit.slurm
+Monitor jobs:
 
-      - uses: mamba-org/setup-micromamba@v2
-        with:
-          environment-file: environment.yml
+squeue -u lindizga
+View accounting information:
 
-      - name: Run pytest
-        shell: bash -l {0}
-        run: pytest -v
+sacct -j JOB_ID
+Results
+The Solow Growth Model predicts that higher savings rates lead to higher steady-state levels of capital per worker.
+
+The simulation results support this prediction, demonstrating the positive relationship between savings and long-run capital accumulation.
+
+AI and External Assistance
+This project used Microsoft Copilot to assist with:
+
+Mamba environment setup
+Pytest test development
+GitHub Actions configuration
+Documentation development
+Course lectures and Great Lakes documentation were also used as references.
